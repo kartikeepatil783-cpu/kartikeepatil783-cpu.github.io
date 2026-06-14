@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kartikee Design — 3D Experience</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --violet: #7C3AED;
+    --coral: #FF4F5E;
+    --cyan: #00F5FF;
+    --lime: #C8FF00;
+    --black: #080812;
+    --white: #F0F0FF;
+    --mid: #16162A;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Space Grotesk', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 3rem;
+    background: rgba(8,8,18,0.6);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(200,255,0,0.12);
+  }
+  .logo {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 900; font-size: 1.4rem;
+    background: linear-gradient(90deg, var(--lime), var(--cyan));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    letter-spacing: -0.02em;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--white); text-decoration: none; font-size: 0.85rem;
+    font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+    opacity: 0.7; transition: opacity 0.2s, color 0.2s;
+  }
+  .nav-links a:hover { opacity: 1; color: var(--lime); }
+  .nav-cta {
+    background: var(--lime); color: var(--black);
+    border: none; padding: 0.55rem 1.4rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700; font-size: 0.85rem;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    cursor: pointer; clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+    transition: transform 0.2s, background 0.2s;
+  }
+  .nav-cta:hover { background: var(--cyan); transform: scale(1.04); }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh; display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center; padding: 0 3rem;
+    padding-top: 5rem; gap: 2rem;
+    position: relative; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(ellipse 60% 60% at 70% 50%, rgba(124,58,237,0.25) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 20% 80%, rgba(0,245,255,0.15) 0%, transparent 60%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(200,255,0,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,255,0,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-text { position: relative; z-index: 2; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--lime);
+    border: 1px solid rgba(200,255,0,0.3); padding: 0.35rem 0.9rem;
+    margin-bottom: 1.5rem;
+  }
+  .hero-eyebrow::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--lime); animation: blink 1.5s ease infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+  h1 {
+    font-family: 'Unbounded', sans-serif;
+    font-size: clamp(2.8rem, 5vw, 5rem);
+    font-weight: 900; line-height: 1.0;
+    letter-spacing: -0.03em; margin-bottom: 1.2rem;
+  }
+  .h1-line1 { color: var(--white); display: block; }
+  .h1-line2 {
+    display: block;
+    background: linear-gradient(90deg, var(--coral), var(--violet), var(--cyan));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero-sub {
+    font-size: 1.05rem; line-height: 1.7; opacity: 0.65;
+    max-width: 480px; margin-bottom: 2.5rem;
+  }
+  .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--coral), var(--violet));
+    color: var(--white); border: none;
+    padding: 0.85rem 2.2rem; font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.95rem; font-weight: 700; cursor: pointer;
+    clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 36px rgba(255,79,94,0.4); }
+  .btn-secondary {
+    background: transparent; color: var(--white);
+    border: 1px solid rgba(240,240,255,0.25);
+    padding: 0.85rem 2.2rem; font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.95rem; font-weight: 500; cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--cyan); color: var(--cyan); }
+
+  /* ── 3D SCENE ── */
+  .scene-wrap {
+    position: relative; z-index: 2;
+    display: flex; justify-content: center; align-items: center;
+    height: 520px;
+    perspective: 1000px;
+  }
+  #scene3d {
+    width: 320px; height: 320px;
+    transform-style: preserve-3d;
+    animation: orbit 18s linear infinite;
+  }
+  @keyframes orbit {
+    from { transform: rotateX(20deg) rotateY(0deg); }
+    to   { transform: rotateX(20deg) rotateY(360deg); }
+  }
+  .face {
+    position: absolute; width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Unbounded', sans-serif;
+    font-size: 2.5rem; font-weight: 900;
+    backface-visibility: visible;
+    border: 2px solid;
+  }
+  .face-front  { transform: translateZ(160px); background: rgba(124,58,237,0.18); border-color: rgba(124,58,237,0.6); }
+  .face-back   { transform: rotateY(180deg) translateZ(160px); background: rgba(255,79,94,0.18); border-color: rgba(255,79,94,0.6); }
+  .face-left   { transform: rotateY(-90deg) translateZ(160px); background: rgba(0,245,255,0.12); border-color: rgba(0,245,255,0.5); }
+  .face-right  { transform: rotateY(90deg)  translateZ(160px); background: rgba(200,255,0,0.12); border-color: rgba(200,255,0,0.5); }
+  .face-top    { transform: rotateX(90deg)  translateZ(160px); background: rgba(124,58,237,0.1); border-color: rgba(124,58,237,0.4); }
+  .face-bottom { transform: rotateX(-90deg) translateZ(160px); background: rgba(255,79,94,0.1); border-color: rgba(255,79,94,0.4); }
+
+  /* floating orbs */
+  .orb {
+    position: absolute; border-radius: 50%;
+    filter: blur(2px); animation: floatOrb var(--dur) ease-in-out infinite alternate;
+    pointer-events: none;
+  }
+  @keyframes floatOrb {
+    from { transform: translate(0,0) scale(1); }
+    to   { transform: translate(var(--tx), var(--ty)) scale(1.15); }
+  }
+  .orb1 { width:80px;height:80px;background:rgba(200,255,0,0.7); top:5%;left:10%; --dur:4s;--tx:20px;--ty:30px; }
+  .orb2 { width:50px;height:50px;background:rgba(0,245,255,0.7); top:70%;left:70%; --dur:5.5s;--tx:-15px;--ty:-20px; }
+  .orb3 { width:100px;height:100px;background:rgba(255,79,94,0.5); top:55%;left:-5%; --dur:6s;--tx:10px;--ty:-25px; }
+  .orb4 { width:35px;height:35px;background:rgba(124,58,237,0.8); top:10%;left:80%; --dur:3.5s;--tx:-10px;--ty:15px; }
+
+  /* ── STATS STRIP ── */
+  .stats {
+    display: grid; grid-template-columns: repeat(4,1fr);
+    border-top: 1px solid rgba(200,255,0,0.12);
+    border-bottom: 1px solid rgba(200,255,0,0.12);
+    background: var(--mid);
+  }
+  .stat {
+    padding: 2rem; text-align: center;
+    border-right: 1px solid rgba(200,255,0,0.08);
+    transition: background 0.3s;
+  }
+  .stat:last-child { border-right: none; }
+  .stat:hover { background: rgba(124,58,237,0.15); }
+  .stat-val {
+    font-family: 'Unbounded', sans-serif; font-size: 2.4rem; font-weight: 900;
+    background: linear-gradient(135deg, var(--lime), var(--cyan));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    display: block;
+  }
+  .stat-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.5; margin-top: 0.3rem; }
+
+  /* ── CARDS SECTION ── */
+  #work {
+    padding: 7rem 3rem;
+    position: relative;
+  }
+  #work::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--coral), var(--violet), transparent);
+  }
+  .section-header { margin-bottom: 4rem; }
+  .section-eyebrow {
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--coral); margin-bottom: 0.8rem;
+  }
+  .section-title {
+    font-family: 'Unbounded', sans-serif;
+    font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 900;
+    line-height: 1.05; letter-spacing: -0.03em; max-width: 700px;
+  }
+  .cards-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .card-3d {
+    background: var(--mid); border: 1px solid rgba(255,255,255,0.07);
+    padding: 2.5rem; position: relative; overflow: hidden;
+    cursor: pointer; transition: transform 0.15s, box-shadow 0.3s;
+    transform-style: preserve-3d;
+    clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 18px 100%, 0 calc(100% - 18px));
+  }
+  .card-3d:hover { box-shadow: 0 24px 60px rgba(0,0,0,0.5); }
+  .card-accent {
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  }
+  .ca1 { background: linear-gradient(90deg, var(--coral), var(--violet)); }
+  .ca2 { background: linear-gradient(90deg, var(--cyan), var(--lime)); }
+  .ca3 { background: linear-gradient(90deg, var(--violet), var(--coral)); }
+  .ca4 { background: linear-gradient(90deg, var(--lime), var(--cyan)); }
+  .ca5 { background: linear-gradient(90deg, var(--coral), var(--cyan)); }
+  .ca6 { background: linear-gradient(90deg, var(--violet), var(--lime)); }
+  .card-icon {
+    width: 52px; height: 52px; margin-bottom: 1.5rem;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem; border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.04);
+  }
+  .card-title {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 1.05rem; font-weight: 700; margin-bottom: 0.7rem; line-height: 1.3;
+  }
+  .card-desc { font-size: 0.88rem; line-height: 1.65; opacity: 0.55; }
+  .card-tag {
+    display: inline-block; margin-top: 1.4rem;
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; padding: 0.3rem 0.7rem;
+    border: 1px solid; opacity: 0.7;
+  }
+
+  /* ── FEATURE SPLIT ── */
+  #about {
+    padding: 7rem 3rem; background: var(--mid);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+    position: relative; overflow: hidden;
+  }
+  #about::after {
+    content: 'Kartikee Design'; position: absolute;
+    font-family: 'Unbounded', sans-serif; font-size: 18rem; font-weight: 900;
+    color: transparent; -webkit-text-stroke: 1px rgba(200,255,0,0.04);
+    right: -2rem; bottom: -3rem; pointer-events: none; line-height: 1;
+  }
+  .about-visual {
+    position: relative; height: 420px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hex-grid {
+    position: relative; width: 340px; height: 340px;
+  }
+  .hex {
+    position: absolute; width: 90px; height: 90px;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; transition: transform 0.3s;
+    animation: hexPulse var(--pd) ease-in-out infinite alternate;
+  }
+  .hex:hover { transform: scale(1.15) !important; }
+  @keyframes hexPulse { from{opacity:0.7} to{opacity:1} }
+
+  .h1  { background: var(--violet); top:0;   left:50%; transform:translateX(-50%); --pd:3s; }
+  .h2  { background: var(--coral);  top:100px;left:10%; --pd:4s; }
+  .h3  { background: var(--cyan);   top:100px;left:62%; --pd:3.5s; }
+  .h4  { background: var(--lime);   top:200px;left:30%; --pd:5s; color:var(--black)!important; }
+  .h5  { background: var(--violet); top:200px;left:62%; --pd:4.5s; }
+  .h6  { background: var(--coral);  top:295px;left:50%; transform:translateX(-50%); --pd:3.8s; }
+
+  .about-content .section-title { max-width: 480px; }
+  .feature-list { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1.2rem; }
+  .feature-item {
+    display: flex; gap: 1rem; align-items: flex-start; padding: 1.2rem;
+    border: 1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.02);
+    transition: border-color 0.3s, background 0.3s;
+  }
+  .feature-item:hover { border-color: rgba(124,58,237,0.4); background: rgba(124,58,237,0.08); }
+  .fi-dot {
+    width: 10px; height: 10px; border-radius: 50%; margin-top: 5px; flex-shrink: 0;
+  }
+  .fi-text { font-size: 0.9rem; line-height: 1.6; opacity: 0.7; }
+  .fi-title { font-weight: 700; opacity: 1; margin-bottom: 0.2rem; }
+
+  /* ── PROCESS ── */
+  #process { padding: 7rem 3rem; }
+  .process-row {
+    display: grid; grid-template-columns: repeat(4,1fr); gap: 0;
+    margin-top: 4rem; border: 1px solid rgba(255,255,255,0.06);
+  }
+  .process-step {
+    padding: 2.5rem 2rem; border-right: 1px solid rgba(255,255,255,0.06);
+    position: relative; overflow: hidden;
+    transition: background 0.3s;
+  }
+  .process-step:last-child { border-right: none; }
+  .process-step:hover { background: rgba(255,255,255,0.03); }
+  .step-num {
+    font-family: 'Unbounded', sans-serif; font-size: 4rem; font-weight: 900;
+    line-height: 1; display: block; opacity: 0.07; margin-bottom: 1.5rem;
+  }
+  .step-title {
+    font-family: 'Unbounded', sans-serif; font-size: 0.95rem; font-weight: 700;
+    margin-bottom: 0.7rem; color: var(--white);
+  }
+  .step-desc { font-size: 0.85rem; line-height: 1.7; opacity: 0.5; }
+  .step-icon {
+    position: absolute; top: 1.5rem; right: 1.5rem;
+    font-size: 1.5rem; opacity: 0.5;
+  }
+
+  /* ── CTA BLOCK ── */
+  #cta {
+    padding: 8rem 3rem; text-align: center;
+    background: linear-gradient(135deg, rgba(124,58,237,0.2), rgba(255,79,94,0.1));
+    position: relative; overflow: hidden;
+  }
+  #cta::before {
+    content:''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(0,245,255,0.08) 0%, transparent 70%);
+  }
+  .cta-title {
+    font-family: 'Unbounded', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 5rem); font-weight: 900;
+    line-height: 1.05; letter-spacing: -0.03em;
+    max-width: 800px; margin: 0 auto 2rem;
+    position: relative; z-index: 1;
+  }
+  .cta-title span {
+    background: linear-gradient(90deg, var(--lime), var(--cyan));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .cta-sub { opacity: 0.6; max-width: 480px; margin: 0 auto 3rem; position: relative; z-index:1; }
+  .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; position: relative; z-index:1; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--black); border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 3rem; display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-logo {
+    font-family: 'Unbounded', sans-serif; font-weight: 900; font-size: 1.2rem;
+    background: linear-gradient(90deg, var(--lime), var(--cyan));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .footer-copy { font-size: 0.8rem; opacity: 0.35; }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a { font-size: 0.8rem; color: var(--white); opacity: 0.4; text-decoration: none; transition: opacity 0.2s; }
+  .footer-links a:hover { opacity: 1; }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    #hero { grid-template-columns: 1fr; text-align: center; padding: 7rem 1.5rem 3rem; }
+    .scene-wrap { height: 300px; }
+    #scene3d { width: 220px; height: 220px; }
+    .face-front  { transform: translateZ(110px); }
+    .face-back   { transform: rotateY(180deg) translateZ(110px); }
+    .face-left   { transform: rotateY(-90deg) translateZ(110px); }
+    .face-right  { transform: rotateY(90deg) translateZ(110px); }
+    .face-top    { transform: rotateX(90deg) translateZ(110px); }
+    .face-bottom { transform: rotateX(-90deg) translateZ(110px); }
+    .hero-sub { margin: 0 auto 2rem; }
+    .hero-buttons { justify-content: center; }
+    .stats { grid-template-columns: repeat(2,1fr); }
+    .cards-grid { grid-template-columns: 1fr; }
+    #about { grid-template-columns: 1fr; padding: 4rem 1.5rem; }
+    .about-visual { height: 260px; }
+    .process-row { grid-template-columns: 1fr 1fr; }
+    .process-step { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    #work, #process, #cta { padding: 5rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Kartikee Design</div>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#cta">Contact</a></li>
+  </ul>
+  <button class="nav-cta">Get Started</button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+
+  <div class="hero-text reveal">
+    <div class="hero-eyebrow">3D Design Studio</div>
+    <h1>
+      <span class="h1-line1">Build Beyond</span>
+      <span class="h1-line2">Dimensions</span>
+    </h1>
+    <p class="hero-sub">We craft immersive 3D digital experiences that don't just look good — they feel alive. From brand identities to interactive universes.</p>
+    <div class="hero-buttons">
+      <button class="btn-primary">Explore Our Work</button>
+      <button class="btn-secondary">Watch Reel →</button>
+    </div>
+  </div>
+
+  <div class="scene-wrap reveal">
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+    <div class="orb orb4"></div>
+    <div id="scene3d">
+      <div class="face face-front">✦</div>
+      <div class="face face-back">◈</div>
+      <div class="face face-left">⬡</div>
+      <div class="face face-right">◉</div>
+      <div class="face face-top">⬟</div>
+      <div class="face face-bottom">✧</div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat reveal">
+    <span class="stat-val">340+</span>
+    <span class="stat-label">Projects Shipped</span>
+  </div>
+  <div class="stat reveal">
+    <span class="stat-val">98%</span>
+    <span class="stat-label">Client Satisfaction</span>
+  </div>
+  <div class="stat reveal">
+    <span class="stat-val">12×</span>
+    <span class="stat-label">Award Wins</span>
+  </div>
+  <div class="stat reveal">
+    <span class="stat-val">6yr</span>
+    <span class="stat-label">In the Industry</span>
+  </div>
+</div>
+
+<!-- WORK -->
+<section id="work">
+  <div class="section-header reveal">
+    <div class="section-eyebrow">Selected Work</div>
+    <h2 class="section-title">Projects That Push What's Possible</h2>
+  </div>
+  <div class="cards-grid">
+    <div class="card-3d reveal" data-tilt>
+      <div class="card-accent ca1"></div>
+      <div class="card-icon">🌐</div>
+      <div class="card-title">Neuro Brand Identity</div>
+      <p class="card-desc">A complete visual identity system for a neurotech startup — from logo to motion language, built for the next decade.</p>
+      <span class="card-tag" style="color:var(--coral);border-color:rgba(255,79,94,0.3)">Branding</span>
+    </div>
+    <div class="card-3d reveal" data-tilt>
+      <div class="card-accent ca2"></div>
+      <div class="card-icon">🔮</div>
+      <div class="card-title">Vortex WebGL Experience</div>
+      <p class="card-desc">Real-time 3D product configurator built with WebGL — 40k unique combinations, zero load time.</p>
+      <span class="card-tag" style="color:var(--cyan);border-color:rgba(0,245,255,0.3)">3D / WebGL</span>
+    </div>
+    <div class="card-3d reveal" data-tilt>
+      <div class="card-accent ca3"></div>
+      <div class="card-icon">⚡</div>
+      <div class="card-title">Luminary App Design</div>
+      <p class="card-desc">End-to-end UX for an energy management platform — 60fps animations, dark & light, across 4 devices.</p>
+      <span class="card-tag" style="color:var(--lime);border-color:rgba(200,255,0,0.3)">UI/UX</span>
+    </div>
+    <div class="card-3d reveal" data-tilt>
+      <div class="card-accent ca4"></div>
+      <div class="card-icon">🎮</div>
+      <div class="card-title">Arcane Game UI Kit</div>
+      <p class="card-desc">A 240-component design system for a game studio — particle effects, shader overlays, and HUD modules.</p>
+      <span class="card-tag" style="color:var(--violet);border-color:rgba(124,58,237,0.4)">Game UI</span>
+    </div>
+    <div class="card-3d reveal" data-tilt>
+      <div class="card-accent ca5"></div>
+      <div class="card-icon">🌌</div>
+      <div class="card-title">Cosmos Data Platform</div>
+      <p class="card-desc">3D data visualization dashboard for a satellite analytics company — real-time orbital tracking in the browser.</p>
+      <span class="card-tag" style="color:var(--coral);border-color:rgba(255,79,94,0.3)">DataViz</span>
+    </div>
+    <div class="card-3d reveal" data-tilt>
+      <div class="card-accent ca6"></div>
+      <div class="card-icon">🧬</div>
+      <div class="card-title">BioSync Motion Design</div>
+      <p class="card-desc">Animated explainer system for a biotech brand — 3D molecular renders that make complex science feel electric.</p>
+      <span class="card-tag" style="color:var(--cyan);border-color:rgba(0,245,255,0.3)">Motion</span>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-visual reveal">
+    <div class="hex-grid">
+      <div class="hex h1">✦</div>
+      <div class="hex h2">◈</div>
+      <div class="hex h3">⬡</div>
+      <div class="hex h4" style="color:#080812">◉</div>
+      <div class="hex h5">⬟</div>
+      <div class="hex h6">✧</div>
+    </div>
+  </div>
+  <div class="about-content reveal">
+    <div class="section-eyebrow">Why Kartikee Design</div>
+    <h2 class="section-title">Design That Thinks in Three Dimensions</h2>
+    <div class="feature-list">
+      <div class="feature-item">
+        <div class="fi-dot" style="background:var(--violet)"></div>
+        <div class="fi-text">
+          <div class="fi-title">Spatial First</div>
+          We think in depth, not just surfaces. Every visual decision starts from how it lives in 3D space.
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="fi-dot" style="background:var(--coral)"></div>
+        <div class="fi-text">
+          <div class="fi-title">Performance Obsessed</div>
+          Breathtaking visuals that run at 60fps on any device — because beauty without speed is just a screenshot.
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="fi-dot" style="background:var(--cyan)"></div>
+        <div class="fi-text">
+          <div class="fi-title">Brand-True Motion</div>
+          Every animation carries the brand's personality — not just decoration, but identity in motion.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="section-header reveal">
+    <div class="section-eyebrow">How We Work</div>
+    <h2 class="section-title">A Process Built for Bold Outcomes</h2>
+  </div>
+  <div class="process-row">
+    <div class="process-step reveal">
+      <span class="step-num">01</span>
+      <span class="step-icon">🎯</span>
+      <div class="step-title">Discover</div>
+      <p class="step-desc">We map your world: your users, your market, the visual language your competitors are ignoring.</p>
+    </div>
+    <div class="process-step reveal">
+      <span class="step-num">02</span>
+      <span class="step-icon">✏️</span>
+      <div class="step-title">Concept</div>
+      <p class="step-desc">Three directions, each radically different. You pick a direction — we refine it into a visual thesis.</p>
+    </div>
+    <div class="process-step reveal">
+      <span class="step-num">03</span>
+      <span class="step-icon">⚙️</span>
+      <div class="step-title">Build</div>
+      <p class="step-desc">Design and development run in parallel. You see real, working code — not static mockups.</p>
+    </div>
+    <div class="process-step reveal">
+      <span class="step-num">04</span>
+      <span class="step-icon">🚀</span>
+      <div class="step-title">Launch</div>
+      <p class="step-desc">We ship, monitor, and iterate. The relationship doesn't end at handoff — it starts there.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <h2 class="cta-title reveal">Ready to Build Something <span>Extraordinary?</span></h2>
+  <p class="cta-sub reveal">Most studios play it safe. We don't. Let's make something your industry hasn't seen before.</p>
+  <div class="cta-btns reveal">
+    <button class="btn-primary">Start a Project</button>
+    <button class="btn-secondary">Schedule a Call</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Kartikee Design</div>
+  <div class="footer-copy">© 2026 Kartikee Design. All rights reserved.</div>
+  <div class="footer-links">
+    <a href="#">Twitter</a>
+    <a href="#">Dribbble</a>
+    <a href="#">LinkedIn</a>
+    <a href="#">GitHub</a>
+  </div>
+</footer>
+
+<script>
+// ── SCROLL REVEAL ──
+const revealEls = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+revealEls.forEach(el => observer.observe(el));
+
+// ── 3D TILT ON CARDS ──
+document.querySelectorAll('[data-tilt]').forEach(card => {
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const dx = (e.clientX - cx) / (rect.width / 2);
+    const dy = (e.clientY - cy) / (rect.height / 2);
+    card.style.transform = `perspective(700px) rotateY(${dx * 10}deg) rotateX(${-dy * 10}deg) scale(1.02)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = 'perspective(700px) rotateY(0) rotateX(0) scale(1)';
+    card.style.transition = 'transform 0.5s ease';
+  });
+  card.addEventListener('mouseenter', () => {
+    card.style.transition = 'none';
+  });
+});
+
+// ── SCENE MOUSE PARALLAX ──
+const scene = document.getElementById('scene3d');
+let baseX = 20, baseY = 0;
+document.addEventListener('mousemove', (e) => {
+  const cx = window.innerWidth / 2;
+  const cy = window.innerHeight / 2;
+  const dx = (e.clientX - cx) / cx;
+  const dy = (e.clientY - cy) / cy;
+  scene.style.animationPlayState = 'paused';
+  scene.style.transform = `rotateX(${baseX - dy * 15}deg) rotateY(${baseY + dx * 20}deg)`;
+});
+
+// Resume auto-orbit after mouse leaves
+document.addEventListener('mouseleave', () => {
+  scene.style.animationPlayState = 'running';
+});
+
+// ── PARALLAX ORBS ──
+document.addEventListener('mousemove', (e) => {
+  const orbs = document.querySelectorAll('.orb');
+  orbs.forEach((orb, i) => {
+    const speed = 0.015 * (i + 1);
+    const ox = (e.clientX - window.innerWidth/2) * speed;
+    const oy = (e.clientY - window.innerHeight/2) * speed;
+    orb.style.transform = `translate(${ox}px, ${oy}px)`;
+  });
+});
+
+// ── RESPECT REDUCED MOTION ──
+if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.getElementById('scene3d').style.animation = 'none';
+  document.querySelectorAll('.orb').forEach(o => o.style.animation = 'none');
+  document.querySelectorAll('.hex').forEach(h => h.style.animation = 'none');
+}
+</script>
+</body>
+</html>
